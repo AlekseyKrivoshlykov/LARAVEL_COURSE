@@ -18,22 +18,26 @@ class MainController extends BaseController
 
     public function index ()
     {
-        $response = '';
+        $response = [];
+
         foreach($this->newsArr as $id => $value)
         {
-            $response .= "<div><a href='/category_news/{$id}'> {$value['title']} </a></div>";
+            $url = route('news::showCategory', ['id' => $id]);
+            $response[] = $value['title'];
         }
-        return $response;
+
+        return view('categoryNews', ['response' => $response]);
     }
 
     public function showCategory ($id)
     {
         $news = $this->newsArr[$id];
-        return $news['title'];
+        return view('oneCategory', ['news' => $news['title']]);
     }
 
     public function addNews ()
     {
-        return 'Add a news.';
+        $oneNews = 'oops';
+        return view('oneNews', ['oneNews' => $oneNews]);
     }
 }
