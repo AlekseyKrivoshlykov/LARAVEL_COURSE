@@ -130,7 +130,7 @@
         </div> -->
 
         <header> 
-            Good news, my friends! It's header
+            @yield('title')
         </header>
 
         <main>
