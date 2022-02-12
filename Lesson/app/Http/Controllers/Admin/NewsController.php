@@ -50,21 +50,20 @@ class NewsController extends BaseController
         ]);
     }
 
-    public function update (Request $request, News $news)
+    public function update (Request $request, News $news, Category $category)
     {
-        // dd($news);
-        if ($request->method('post')) {
-            // dd($request);
-            $news->fill($request->all());
-            $news->save();
+        if( $request->isMethod('post'))
+        {
+            $news->update($request->only(['title', 'content']));
             return redirect()->route('admin::index');
         }
-
-        return view('admin/createNews', [
-            'news' => $news,
-            'route' => 'admin::news::update',
-            'title' => 'Изменить новость',
-        ]);
+       
+        return view('admin.createNews', [
+                     'news' => $news,
+                     'route' => 'admin::news::update',
+                     'title' => 'Изменить новость',
+                     'categories' => $category->getList(),
+                 ]);
     }
 
     public function delete (News $news)

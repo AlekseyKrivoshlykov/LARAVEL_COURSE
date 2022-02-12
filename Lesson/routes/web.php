@@ -26,6 +26,16 @@ Route::match(['get', 'post'], '/admin/update/{news}', [App\Http\Controllers\Admi
 Route::match(['get', 'post'], '/admin/delete/{news}', [App\Http\Controllers\Admin\NewsController::class, 'delete'])
 ->name('admin::news::delete');
 
+Route::match(['get', 'post'], '/admin/profile', ['App\Http\Controllers\Admin\ProfileController', 'update'])
+    ->name('admin::profile');
+
+Route::get('/admin/user', [App\Http\Controllers\Admin\UserController::class, 'index'])
+->name('admin::user');
+Route::match(['get', 'post'], '/admin/user/create', [App\Http\Controllers\Admin\UserController::class, 'create'])
+->name('admin::user::create');
+Route::match(['get', 'post'], '/admin/user/update/{user}', [App\Http\Controllers\Admin\UserController::class, 'update'])
+->name('admin::user::update');
+
 
 
 
