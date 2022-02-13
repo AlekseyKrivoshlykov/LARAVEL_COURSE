@@ -15,17 +15,50 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::get('/admin', [App\Http\Controllers\Admin\CategoryController::class, 'index'])
+Route::get('/admin', [App\Http\Controllers\Admin\NewsController::class, 'index'])
 ->name('admin::index');
+Route::match(['get', 'post'], '/admin/news/create', [App\Http\Controllers\Admin\NewsController::class, 'create'])
+->name('admin::news::create');
+Route::match(['get', 'post'], '/admin/update/{news}', [App\Http\Controllers\Admin\NewsController::class, 'update'])
+->name('admin::news::update');
+Route::match(['get', 'post'], '/admin/delete/{news}', [App\Http\Controllers\Admin\NewsController::class, 'delete'])
+->name('admin::news::delete');
+
+Route::match(['get', 'post'], '/admin/profile', ['App\Http\Controllers\Admin\ProfileController', 'update'])
+    ->name('admin::profile');
+
+Route::get('/admin/user', [App\Http\Controllers\Admin\UserController::class, 'index'])
+->name('admin::user');
+Route::match(['get', 'post'], '/admin/user/create', [App\Http\Controllers\Admin\UserController::class, 'create'])
+->name('admin::user::create');
+Route::match(['get', 'post'], '/admin/user/update/{user}', [App\Http\Controllers\Admin\UserController::class, 'update'])
+->name('admin::user::update');
+
+Route::get('/admin/parser', ['App\Http\Controllers\Admin\ParserController', 'index'])
+    ->name('admin::parser');
+
+
 Route::match(['get', 'post'],'/admin/category/create', [App\Http\Controllers\Admin\CategoryController::class, 'create'])
 ->name('admin::category::create');
 
-Route::get('/categoryNews', [App\Http\Controllers\MainController::class, 'index']);
 
+
+Route::get('/categoryNews', [App\Http\Controllers\MainController::class, 'index']);
 Route::get('/categoryNews/{id}', [App\Http\Controllers\MainController::class, 'showCategory'])
 ->name('news::showCategory');
 
 Route::get('/authorization', [App\Http\Controllers\AuthController::class, 'index']);
 
+
+
+Route::group([
+    'prefix' => 'social',
+    'as' => 'social::',
+], function () {
+    Route::get('/login', [SocialController::class, 'loginVk'])
+        ->name('login-vk');
+    Route::get('/response', [SocialController::class, 'responseVk'])
+        ->name('response-vk');
+});
