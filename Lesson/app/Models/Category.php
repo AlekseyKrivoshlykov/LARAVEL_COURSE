@@ -2,25 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class Category 
+
+class Category extends Model
 {
-    private $newsCategory = [
-        1 => ['title' => 'Buisness'],
-        2 => ['title' => 'IT'],
-        3 => ['title' => 'Medicine'],
-        4 => ['title' => 'Politics'],
-    ];
-
-    public function getNewsCategory ()
+    public function getList ()
     {
-    
-        // foreach($this->newsCategory as $value) {
-        
-        //     $result[] = $value['title'];
-        // }
-
-        // return $result;
-        return $this->newsCategory;
+        $categories_table = DB::table('category_news');
+        return $categories_table->select(['id', 'title'])
+                        ->get()
+                        ->pluck('title', 'id');
     }
 }
