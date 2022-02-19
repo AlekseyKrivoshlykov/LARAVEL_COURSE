@@ -24,19 +24,7 @@
 
 <form action="{{route($route, $news->id)}}" method="post">
     @csrf
-    <div class="form-group">
-    <label class="form-label">
-    {{ __('tagsHtml.category_name') }}
-    </label>
-    <br>
-    {!! Form::select('category_id', $categories, $news->category_id)  !!}
-    <div class="form-group">
-        <input type="hidden" name="active" value="0">
-        <label>
-            {!! Form::checkbox('active', 1, $news->active) !!}
-            Active
-        </label>
-    </div>
+  
     <label class="form-label">
         {{ __('tagsHtml.title') }}
     </label>
